@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>CSV Duplicate Data</title>
+</head>
+
+<body>
+	<H2>Record</H2>
+	<ul th:each="tempRecord: ${records}" >
+				<li th:text="${tempRecord}"/>
+			</ul>
+</body>
+
+</html>
