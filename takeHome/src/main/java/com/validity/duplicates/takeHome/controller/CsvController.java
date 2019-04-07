@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,8 @@ public class CsvController {
 	public String sayHello(Model theModel) throws IOException {
 
 		List<CsvBean> records = new ArrayList<CsvBean>();
+		List<CsvBean> duplicateRecords = new ArrayList<CsvBean>();
+		List<CsvBean> nonDuplicateRecords = new ArrayList<CsvBean>();
 
 		try (Reader reader = Files.newBufferedReader(Paths.get("advanced.csv"));) {
 			CsvToBean<CsvBean> csvToBean = new CsvToBeanBuilder(reader).withType(CsvBean.class)
@@ -33,11 +36,26 @@ public class CsvController {
 
 			while (csvUserIterator.hasNext()) {
 				CsvBean objectToCompare = csvUserIterator.next();
-				records.add(objectToCompare);
+
+				// compare before adding
+				if (records.isEmpty()) {
+					records.add(objectToCompare);
+				} else {
+					for (CsvBean csvObject : records) {
+						if (objectToCompare.compareTo(csvObject) > 0) {
+							duplicateRecords.add(objectToCompare);
+							break;
+						}
+					}
+					records.add(objectToCompare);
+				}
 			}
 		}
 		
-		theModel.addAttribute("records", records);
+		nonDuplicateRecords = (List<CsvBean>) CollectionUtils.subtract(records, duplicateRecords);
+		
+		theModel.addAttribute("duplicateRecord", duplicateRecords);
+		theModel.addAttribute("nonDuplicateRecord", nonDuplicateRecords);
 		
 		return "display";
 	}

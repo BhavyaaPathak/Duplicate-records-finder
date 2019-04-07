@@ -1,9 +1,10 @@
 package com.validity.duplicates.takeHome.bean;
 
+import com.validity.duplicates.takeHome.utility.Utility;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
-public class CsvBean{
+public class CsvBean implements Comparable<CsvBean> {
 
 	@CsvBindByName(column = "id")
 	@CsvBindByPosition(position = 0)
@@ -171,8 +172,119 @@ public class CsvBean{
 
 	@Override
 	public String toString() {
+		if (firstName == null)
+			firstName = "";
+		if (lastName == null)
+			lastName = "";
+		if (company == null)
+			company = "";
+		if (email == null)
+			email = "";
+		if (address1 == null)
+			address1 = "";
+		if (address2 == null)
+			address2 = "";
+		if (zip == null)
+			zip = "";
+		if (city == null)
+			city = "";
+		if (stateLong == null)
+			stateLong = "";
+		if (state == null)
+			state = "";
+		if (phone == null)
+			phone = "";
+		
 		return id + ", " + firstName + ", " + lastName + ", " + company + ", " + email + ", " + address1 + ", " + address2
 				 + ", " + zip + ", " + city + ", " + stateLong + ", " + state + ", " + phone;
+	}
+
+	@Override
+	public int compareTo(CsvBean o) {
+		int count = 0;
+		if (this.firstName != null && o.firstName != null) {
+			if (Utility.isLevenshteinEqual(this.firstName, o.firstName,
+					this.firstName.length() - (Integer.valueOf(this.firstName.length() / 3)))
+					&& Utility.isMetaphoneEqual(firstName, o.firstName)) {
+				count++;
+			}
+		}
+		if (this.lastName != null && o.lastName != null) {
+			if (Utility.isLevenshteinEqual(this.lastName, o.lastName,
+					this.lastName.length() - (Integer.valueOf(this.lastName.length() / 3)))
+					&& Utility.isMetaphoneEqual(lastName, o.lastName)) {
+				count++;
+			}
+		}
+		if (this.company != null && o.company != null) {
+			if (Utility.isLevenshteinEqual(this.company, o.company,
+					this.company.length() - (Integer.valueOf(this.company.length() / 3)))
+					&& Utility.isMetaphoneEqual(company, o.company)) {
+				count++;
+			}
+		}
+		if (this.email != null && o.email != null) {
+			if (Utility.isLevenshteinEqual(this.email, o.email,
+					this.email.length() - (Integer.valueOf(this.email.length() / 3)))
+					&& Utility.isMetaphoneEqual(email, o.email)) {
+				count++;
+			}
+		}
+		if (this.address1 != null && o.address1 != null) {
+			if (Utility.isLevenshteinEqual(this.address1, o.address1,
+					this.address1.length() - (Integer.valueOf(this.address1.length() / 3)))
+					&& Utility.isMetaphoneEqual(address1, o.address1)) {
+				count++;
+			}
+		}
+		if (this.address2 != null && o.address2 != null) {
+			if (Utility.isLevenshteinEqual(this.address2, o.address2,
+					this.address2.length() - (Integer.valueOf(this.address2.length() / 3)))
+					&& Utility.isMetaphoneEqual(address2, o.address2)) {
+				count++;
+			}
+
+		}
+		if (this.zip != null && o.zip != null) {
+			if (Utility.isLevenshteinEqual(this.zip, o.zip,
+					this.zip.length() - (Integer.valueOf(this.zip.length() / 3)))
+					&& Utility.isMetaphoneEqual(zip, o.zip)) {
+				count++;
+			}
+		}
+		if (this.city != null && o.city != null) {
+			if (Utility.isLevenshteinEqual(this.city, o.city,
+					this.city.length() - (Integer.valueOf(this.city.length() / 3)))
+					&& Utility.isMetaphoneEqual(city, o.city)) {
+				count++;
+			}
+		}
+		if (this.stateLong != null && o.stateLong != null) {
+			if (Utility.isLevenshteinEqual(this.stateLong, o.stateLong,
+					this.stateLong.length() - (Integer.valueOf(this.stateLong.length() / 3)))
+					&& Utility.isMetaphoneEqual(stateLong, o.stateLong)) {
+				count++;
+			}
+		}
+		if (this.state != null && o.state != null) {
+			if (Utility.isLevenshteinEqual(this.state, o.state,
+					this.state.length() - (Integer.valueOf(this.state.length() / 3)))
+					&& Utility.isMetaphoneEqual(state, o.state)) {
+				count++;
+			}
+		}
+		if (this.phone != null && o.phone != null) {
+			if (Utility.isLevenshteinEqual(this.phone, o.phone,
+					this.phone.length() - (Integer.valueOf(this.phone.length() / 3)))
+					&& Utility.isMetaphoneEqual(phone, o.phone)) {
+				count++;
+			}
+		}
+		if (count >= 8) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 }
