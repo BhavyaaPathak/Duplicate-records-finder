@@ -199,6 +199,8 @@ public class CsvBean implements Comparable<CsvBean> {
 				 + ", " + zip + ", " + city + ", " + stateLong + ", " + state + ", " + phone;
 	}
 
+	// compareTo overrides the compareTo method of comparable class
+	// compares the records using levenshtein distance and metaphone algorithm
 	@Override
 	public int compareTo(CsvBean o) {
 		int count = 0;
@@ -280,7 +282,7 @@ public class CsvBean implements Comparable<CsvBean> {
 				count++;
 			}
 		}
-		if (count >= 8) {
+		if (count >= 6) {
 			return 1;
 		} else {
 			return 0;
