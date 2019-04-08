@@ -2,9 +2,9 @@
 
 ### For building and running the application you need:
 ___
-..1. JDK 1.8
-..2. STS or Ecplipse with STS plugin
-..3. Maven
+* JDK 1.8
+* STS or Ecplipse with STS plugin
+* Maven
 
 ### Running the application locally
 ___
